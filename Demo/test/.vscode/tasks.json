@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Clean Build Folder",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "if exist \"${workspaceFolder}\\..\\windows-x64-msvc2017\" rmdir /s /q \"${workspaceFolder}\\..\\windows-x64-msvc2017\""
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Create Build Folder",
+            "type": "shell",
+            "dependsOn": "Clean Build Folder",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "mkdir \"${workspaceFolder}/../windows-x64-msvc2017\""
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "windows-x64-msvc2017",
+            "type": "shell",
+            "dependsOn": "Create Build Folder",
+            "options": {
+                "cwd": "${workspaceFolder}/../windows-x64-msvc2017"
+            },
+            "command": "cmd",
+            "args": [
+                "/c",
+                "call \"E:\\Soft\\Visual Studio 2017 IDE\\VC\\Auxiliary\\Build\\vcvars64.bat\" && \"E:\\Soft\\Qt5.12.2\\creator\\5.12.2\\msvc2017_64\\bin\\qmake.exe\" ${workspaceFolder}\\test.pro -r && nmake"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+        }
+    ]
+}
